@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MetricQueryServiceClient interface {
-	QueryCpuUsage(ctx context.Context, in *CpuUsagesssParam, opts ...grpc.CallOption) (*CpuUsageRsp, error)
+	QueryCpuUsage(ctx context.Context, in *CpuUsageParam, opts ...grpc.CallOption) (*CpuUsageRsp, error)
 	QueryProcessStatFd(ctx context.Context, in *ProcessStatFdParam, opts ...grpc.CallOption) (*ProcessStatFdRsp, error)
 	QueryProcessStatRss(ctx context.Context, in *ProcessStatRssParam, opts ...grpc.CallOption) (*ProcessStatRssRsp, error)
 	QueryProcessStatVirtualSize(ctx context.Context, in *ProcessStatVirtualSizeParam, opts ...grpc.CallOption) (*ProcessStatVirtualSizeRsp, error)
@@ -40,7 +40,7 @@ func NewMetricQueryServiceClient(cc grpc.ClientConnInterface) MetricQueryService
 	return &metricQueryServiceClient{cc}
 }
 
-func (c *metricQueryServiceClient) QueryCpuUsage(ctx context.Context, in *CpuUsagesssParam, opts ...grpc.CallOption) (*CpuUsageRsp, error) {
+func (c *metricQueryServiceClient) QueryCpuUsage(ctx context.Context, in *CpuUsageParam, opts ...grpc.CallOption) (*CpuUsageRsp, error) {
 	out := new(CpuUsageRsp)
 	err := c.cc.Invoke(ctx, "/demo.v3.MetricQueryService/queryCpuUsage", in, out, opts...)
 	if err != nil {
@@ -152,7 +152,7 @@ func (c *metricQueryServiceClient) QueryGoroutineCount(ctx context.Context, in *
 // All implementations must embed UnimplementedMetricQueryServiceServer
 // for forward compatibility
 type MetricQueryServiceServer interface {
-	QueryCpuUsage(context.Context, *CpuUsagesssParam) (*CpuUsageRsp, error)
+	QueryCpuUsage(context.Context, *CpuUsageParam) (*CpuUsageRsp, error)
 	QueryProcessStatFd(context.Context, *ProcessStatFdParam) (*ProcessStatFdRsp, error)
 	QueryProcessStatRss(context.Context, *ProcessStatRssParam) (*ProcessStatRssRsp, error)
 	QueryProcessStatVirtualSize(context.Context, *ProcessStatVirtualSizeParam) (*ProcessStatVirtualSizeRsp, error)
@@ -171,7 +171,7 @@ type MetricQueryServiceServer interface {
 type UnimplementedMetricQueryServiceServer struct {
 }
 
-func (UnimplementedMetricQueryServiceServer) QueryCpuUsage(context.Context, *CpuUsagesssParam) (*CpuUsageRsp, error) {
+func (UnimplementedMetricQueryServiceServer) QueryCpuUsage(context.Context, *CpuUsageParam) (*CpuUsageRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryCpuUsage not implemented")
 }
 func (UnimplementedMetricQueryServiceServer) QueryProcessStatFd(context.Context, *ProcessStatFdParam) (*ProcessStatFdRsp, error) {
@@ -221,7 +221,7 @@ func RegisterMetricQueryServiceServer(s grpc.ServiceRegistrar, srv MetricQuerySe
 }
 
 func _MetricQueryService_QueryCpuUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CpuUsagesssParam)
+	in := new(CpuUsageParam)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -233,7 +233,7 @@ func _MetricQueryService_QueryCpuUsage_Handler(srv interface{}, ctx context.Cont
 		FullMethod: "/demo.v3.MetricQueryService/queryCpuUsage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MetricQueryServiceServer).QueryCpuUsage(ctx, req.(*CpuUsagesssParam))
+		return srv.(MetricQueryServiceServer).QueryCpuUsage(ctx, req.(*CpuUsageParam))
 	}
 	return interceptor(ctx, in, info, handler)
 }
