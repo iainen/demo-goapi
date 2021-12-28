@@ -1,4 +1,4 @@
-#!/usr/bin
+#!/usr/bin/env zsh
 
 export BASEDIR=$(dirname "$0")/..
 export TEMPDIR="$BASEDIR"/temp
